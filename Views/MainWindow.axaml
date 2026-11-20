@@ -1,0 +1,81 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:models="using:MediaVault.Models"
+        x:Class="MediaVault.MainWindow"
+        Title="MediaVault — Gestor de Anime y Videojuegos"
+        Width="920" Height="560"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid ColumnDefinitions="340,*" Margin="20" ColumnSpacing="20">
+        <!-- Panel Izquierdo: Formulario -->
+        <Border Grid.Column="0" BorderBrush="#CCCCCC" BorderThickness="1" CornerRadius="8" Padding="16">
+            <StackPanel Spacing="10">
+                <TextBlock Text="Registro / Edición" FontSize="18" FontWeight="Bold"/>
+
+                <TextBlock Text="Categoría:"/>
+                <ComboBox x:Name="CmbTipo" SelectedIndex="0" HorizontalAlignment="Stretch" SelectionChanged="CmbTipo_SelectionChanged">
+                    <ComboBoxItem Content="Videojuego"/>
+                    <ComboBoxItem Content="Anime"/>
+                </ComboBox>
+
+                <TextBlock Text="Título:"/>
+                <TextBox x:Name="TxtTitulo" PlaceholderText="Ej. Elden Ring / Frieren"/>
+
+                <TextBlock Text="Género:"/>
+                <TextBox x:Name="TxtGenero" PlaceholderText="Ej. RPG / Fantasía"/>
+
+                <TextBlock x:Name="LblDatoExtra" Text="Plataforma:"/>
+                <TextBox x:Name="TxtDatoExtra" PlaceholderText="Ej. Nintendo Switch / PC"/>
+
+                <TextBlock Text="Estado:"/>
+                <ComboBox x:Name="CmbEstado" SelectedIndex="0" HorizontalAlignment="Stretch">
+                    <ComboBoxItem Content="Pendiente"/>
+                    <ComboBoxItem Content="En progreso"/>
+                    <ComboBoxItem Content="Completado"/>
+                </ComboBox>
+
+                <TextBlock Text="Calificación (1 a 10):"/>
+                <TextBox x:Name="TxtCalificacion" PlaceholderText="Ej. 9"/>
+
+                <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,10,0,0">
+                    <Button x:Name="BtnGuardar" Content="Guardar" Click="BtnGuardar_Click" Background="#2563EB" Foreground="White"/>
+                    <Button x:Name="BtnActualizar" Content="Actualizar" Click="BtnActualizar_Click"/>
+                    <Button x:Name="BtnLimpiar" Content="Limpiar" Click="BtnLimpiar_Click"/>
+                </StackPanel>
+
+                <TextBlock x:Name="TxtMensaje" TextWrapping="Wrap" FontWeight="SemiBold" Margin="0,8,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Panel Derecho: Lista y Eliminación -->
+        <Grid Grid.Column="1" RowDefinitions="Auto,*,Auto" RowSpacing="12">
+            <TextBlock Grid.Row="0" Text="Mi Colección Guardada" FontSize="18" FontWeight="Bold"/>
+
+            <ListBox Grid.Row="1" x:Name="LstColeccion" SelectionChanged="LstColeccion_SelectionChanged" BorderBrush="#CCCCCC" BorderThickness="1" CornerRadius="8">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="models:ElementoColeccion">
+                        <StackPanel Margin="4">
+                            <TextBlock Text="{Binding Titulo}" FontWeight="Bold" FontSize="14"/>
+                            <TextBlock FontSize="12" Foreground="#555555">
+                                <Run Text="{Binding Tipo}"/>
+                                <Run Text=" | "/>
+                                <Run Text="{Binding DatoExtra}"/>
+                                <Run Text=" | "/>
+                                <Run Text="{Binding Genero}"/>
+                                <Run Text=" | Estado: "/>
+                                <Run Text="{Binding Estado}"/>
+                                <Run Text=" | Nota: "/>
+                                <Run Text="{Binding Calificacion}"/>
+                                <Run Text="/10"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                <Button x:Name="BtnEliminar" Content="Eliminar Seleccionado" Click="BtnEliminar_Click" Background="#DC2626" Foreground="White"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
